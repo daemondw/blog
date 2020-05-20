@@ -18,13 +18,14 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::get('/', function () {
-    $tasks = [
-        'Go to the store',
-        'Finish my screencast',
-        'Clean the house'
-    ];
+    $tasks = DB::table('tasks')->latest()->get();
 
     return view('welcome', compact('tasks'));
 });
 
+Route::get('/tasks/{task}', function ($id) {
+    $tasks = DB::table('tasks')->find($id);
+
+    return view('tasks.show', compact('tasks'));
+});
 
